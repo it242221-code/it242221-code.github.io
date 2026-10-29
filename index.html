@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table border="2" id="mainTable">
+        <tr id="mainWeekDay">
+            <th>　</th>
+            <th id="mainMon">月</th>
+            <th id="mainTue">火</th>
+            <th id="mainWed">水</th>
+            <th id="mainThu">木</th>
+            <th id="mainFri">金</th>
+        </tr>
+
+        <tr>
+            <td>１＿ 09:30 ~ 11:00</td>
+            <td bgcolor="#aaffaa">プロマネ<br>　T33</td>
+            <td bgcolor="#aaaaaa"></td>
+            <td bgcolor="#ccccff">会　　計<br>　T43</td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffbbff">ラズパイ<br>　T31</td>
+        </tr>
+
+        <tr>
+            <td>２＿ 11:15 ~ 12:45</td>
+            <td bgcolor="#aaffaa">プロマネ<br>　T33</td>
+            <td bgcolor="#aaaaaa"></td>
+            <td bgcolor="#ccccff">会　　計<br>　T43</td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffbbff">ラズパイ<br>　T31</td>
+        </tr>
+
+        <tr>
+            <td>３＿ 13:35 ~ 15:05</td>
+            <td bgcolor="#aaaaaa"></td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffffcc">クラウド<br>　T46</td>
+            <td bgcolor="#eeeeee">就職研究<br>　ラボ</td>
+        </tr>
+
+        <tr>
+            <td>４＿ 15:20 ~ 16:50</td>
+            <td bgcolor="#aaaaaa"></td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffaaaa">卒業研究<br>　T33</td>
+            <td bgcolor="#ffffcc">クラウド<br>　T46</td>
+            <td bgcolor="#aaaaaa"></td>
+        </tr>
+    </table>
+
+    <div id="idouMon" hidden>　　　　　Ｔ３３</div>
+    <div id="idouTue" hidden>　　　　　＿＿＿　ー＞　Ｔ３３</div>
+    <div id="idouWed" hidden>　　　　　Ｔ４３　ー＞　Ｔ３３</div>
+    <div id="idouThu" hidden>　　　　　Ｔ３３　ー＞　Ｔ４６</div>
+    <div id="idouFri" hidden>　　　　　Ｔ３３　ー＞　５Ｆ</div>
+
+    <br>
+
+    <table border="1" id="kTimesTable">
+        <tr>
+            <td align="center"> <button id="kTimesEdit">編集</button> </td>
+            <th id="kClass0">プロマネ</th>
+            <th id="kClass1">会　　計</th>
+            <th id="kClass2">クラウド</th>
+            <th id="kClass3">ラズパイ</th>
+            <th id="kClass4">卒業研究</th>
+            <th id="kClass5">就職研究</th>
+        </tr>
+
+        <tr id="kTimeUpButtons" hidden>
+            <td></td>
+            <td align="center"> <button id="kTimeUpButton0">▲</button> </td>
+            <td align="center"> <button id="kTimeUpButton1">▲</button> </td>
+            <td align="center"> <button id="kTimeUpButton2">▲</button> </td>
+            <td align="center"> <button id="kTimeUpButton3">▲</button> </td>
+            <td align="center"> <button id="kTimeUpButton4">▲</button> </td>
+            <td align="center"> <button id="kTimeUpButton5">▲</button> </td>
+        </tr>
+
+        <tr>
+            <td>残欠席数</td>
+            <td id="kTimes0" align="right">0</td>
+            <td id="kTimes1" align="right">0</td>
+            <td id="kTimes2" align="right">0</td>
+            <td id="kTimes3" align="right">0</td>
+            <td id="kTimes4" align="right">0</td>
+            <td id="kTimes5" align="right">0</td>
+        </tr>
+
+        <tr id="kTimeDownButtons" hidden>
+            <td></td>
+            <td align="center"> <button id="kTimeDownButton0">▼</button> </td>
+            <td align="center"> <button id="kTimeDownButton1">▼</button> </td>
+            <td align="center"> <button id="kTimeDownButton2">▼</button> </td>
+            <td align="center"> <button id="kTimeDownButton3">▼</button> </td>
+            <td align="center"> <button id="kTimeDownButton4">▼</button> </td>
+            <td align="center"> <button id="kTimeDownButton5">▼</button> </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table border="2" id="kTable">
+        <tr>
+            <th>欠席入力用</th>
+            <th class="kMon">月</th>
+            <th class="kTue">火</th>
+            <th class="kWed">水</th>
+            <th class="kThu">木</th>
+            <th class="kFri">金</th>
+        </tr>
+
+        <tr>
+            <td>１＿ 09:30 ~ 11:00</td>
+            <td class="kMon" id="k1-1">プロマネ</td>
+            <td></td>
+            <td class="kWed" id="k3-1">会　　計</td>
+            <td class="kThu" id="k4-1">卒業研究</td>
+            <td class="kFri" id="k5-1">ラズパイ</td>
+        </tr>
+
+        <tr>
+            <td>２＿ 11:15 ~ 12:45</td>
+            <td class="kMon" id="k1-2">プロマネ</td>
+            <td></td>
+            <td class="kWed" id="k3-2">会　　計</td>
+            <td class="kThu" id="k4-2">卒業研究</td>
+            <td class="kFri" id="k5-2">ラズパイ</td>
+        </tr>
+
+        <tr>
+            <td>３＿ 13:35 ~ 15:05</td>
+            <td></td>
+            <td class="kTue" id="k2-3">卒業研究</td>
+            <td class="kWed" id="k3-3">卒業研究</td>
+            <td class="kThu" id="k4-3">クラウド</td>
+            <td class="kFri" id="k5-3">就職研究</td>
+        </tr>
+
+        <tr>
+            <td>４＿ 15:20 ~ 16:50</td>
+            <td></td>
+            <td class="kTue" id="k2-4">卒業研究</td>
+            <td class="kWed" id="k3-4">卒業研究</td>
+            <td class="kThu" id="k4-4">クラウド</td>
+            <td></td>
+        </tr>
+
+    </table>
+
+    <button id="kKakutei" disabled>
+        欠席確定
+    </button>
+
+    <button id="kHenkou">
+        内容変更
+    </button>
+
+    <script>
+        let dayNumCol = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        var time = new Date();
+        var dayNum = time.getDay();
+        var kTodayNum;
+        var kSelectNow = [1, 1, 1, 1, 1, 1];
+        let kMax = [1, 6, 35, 210, 210, 30];
+        var kWeeklyData = [1, 1, 1, 1, 1, 1];
+        var kStorage = [0, 0, 0, 0, 0, 0];
+        var kStorageNameMemo = ["プロマネ", "会　　計", "クラウド", "ラズパイ", "卒業研究", "就職研究"];
+        if (time.getHours() >= 19 && dayNum - 1 < time.getDay()) {
+            if (dayNum == 6) kWeeklyDataReset();
+            dayNum++;
+        }
+
+        if (dayNum > 6) dayNum = 0;
+        if (dayNum != 0 && dayNum != 6) {
+            kTodayNum = document.getElementsByClassName('k' + dayNumCol[dayNum]);
+        }
+        document.getElementById("main" + dayNumCol[dayNum]).style.backgroundColor = ("#ff8888");
+        document.getElementById("idou" + dayNumCol[dayNum]).removeAttribute("hidden");
+
+        if (kTodayNum) {
+            for (var i = 0; i < kTodayNum.length; i++) {
+                kTodayNum.item(i).style.backgroundColor = ("#ffff88");
+            }
+        }
+
+
+
+
+
+
+        //-----欠席入力-----//
+
+
+        for (var i = 1; i <= 5; i++) {
+            var kDayNum = document.getElementsByClassName('k' + dayNumCol[i]);
+
+            kDayNum.item(0).addEventListener('click', (e) => {
+                kDayAllSelect(e.target.className);
+            });
+
+            for (var l = 1; l < kDayNum.length; l++) {
+                kDayNum.item(l).addEventListener('click', (e) => {
+                    kSelect(e.target);
+                });
+            }
+        }
+
+        document.getElementById("kKakutei").addEventListener('click', (e) => {
+            for (var i = 1; i <= 5; i++) {
+                if (kWeeklyData[i] == 1) {
+                    kWeeklyData[i] = kSelectNow[i];
+                }
+                localStorage.setItem('kWeekly' + dayNumCol[i], kWeeklyData[i].toString());
+            }
+            kSelectNow = [1, 1, 1, 1, 1, 1];
+        });
+
+
+
+
+
+
+
+
+        //-----FUNC-----//
+
+
+        function kSelect(kTarget) {
+            var ksnfAns = kSelectNowFunc(kTarget.id);
+            if (ksnfAns % 1000 == 1) {
+                if (kTarget.className == "k" + dayNumCol[dayNum]) {
+                    kTarget.style.backgroundColor = ("#ffff88");
+                }
+                else {
+                    kTarget.style.backgroundColor = ("#ffffff");
+                }
+            }
+            else {
+                if (kTarget.className == "k" + dayNumCol[dayNum]) {
+                    kTarget.style.backgroundColor = ("#ff9999");
+                }
+                else {
+                    kTarget.style.backgroundColor = ("#bbbbbb");
+                }
+            }
+
+            if (kSelectNow[1] * kSelectNow[2] * kSelectNow[3] * kSelectNow[4] * kSelectNow[5] != 1) {
+                document.getElementById("kKakutei").removeAttribute("disabled");
+            }
+            else {
+                document.getElementById("kKakutei").setAttribute("disabled", true);
+            }
+        }
+
+        function kDayAllSelect(kClass) {
+            var kSelectDayClass = document.getElementsByClassName(kClass);
+            for (var i = 1; i <= 5; i++) {
+                if (kClass == "k" + dayNumCol[i]) {
+                    if (kSelectNow[i] != kMax[i]) {
+                        kSelectNow[i] = 1;
+                    }
+                    break;
+                }
+            }
+            for (var l = 1; l <= kSelectDayClass.length; l++) {
+                kSelect(kSelectDayClass.item(l));
+            }
+        }
+
+        function kSelectNowFunc(kSelectId) {
+            var n = 1;
+            for (var i = 1; i <= 5; i++) {
+                for (var l = 1; l <= 4; l++) {
+                    if (kSelectId == "k" + i.toString() + "-" + l.toString()) {
+                        switch (l) {
+                            case 1:
+                                n = 2;
+                                break;
+                            case 2:
+                                n = 3;
+                                break;
+                            case 3:
+                                n = 5;
+                                break;
+                            case 4:
+                                n = 7;
+                                break;
+                        }
+                        break;
+                    }
+                }
+                if (n != 1) {
+                    if (kSelectNow[i] % n == 0) {
+                        kSelectNow[i] /= n;
+                        return 1000 * i + 1;
+                    }
+                    else {
+                        kSelectNow[i] *= n;
+                        return 1000 * i + n;
+                    }
+                    break;
+                }
+            }
+        }
+
+        function kWeeklyDataReset() {
+            kWeeklyData = [1, 1, 1, 1, 1, 1];
+        }
+
+        window.onload = function () {
+            for (var i = 0; i < 6; i++) {
+                if (localStorage.getItem(kStorageNameMemo[i])) {
+                    kStorage[i] = Number(localStorage.getItem(kStorageNameMemo[i]));
+                }
+            }
+            for (var i = 1; i <= 5; i++) {
+                if (localStorage.getItem('kWeekly' + dayNumCol[i])) {
+                    kWeeklyData[i] = Number(localStorage.getItem('kWeekly' + dayNumCol[i]));
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
