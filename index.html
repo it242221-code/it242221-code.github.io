@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body style="font-size: 14px;">
     <table border="2" id="mainTable">
         <tr id="mainWeekDay">
             <th>　</th>
@@ -173,6 +173,7 @@
         var kWeeklyData = [1, 1, 1, 1, 1, 1];
         var kStorage = [0, 0, 0, 0, 0, 0];
         var kStorageNameMemo = ["プロマネ", "会　　計", "クラウド", "ラズパイ", "卒業研究", "就職研究"];
+        var kTimesMax = [6, 6, 6, 6, 18, 3];
         if (time.getHours() >= 19 && dayNum - 1 < time.getDay()) {
             if (dayNum == 6) kWeeklyDataReset();
             dayNum++;
@@ -190,6 +191,8 @@
                 kTodayNum.item(i).style.backgroundColor = ("#ffff88");
             }
         }
+
+        kTimesSet();
 
 
 
@@ -215,12 +218,47 @@
 
         document.getElementById("kKakutei").addEventListener('click', (e) => {
             for (var i = 1; i <= 5; i++) {
-                if (kWeeklyData[i] == 1) {
+                if (kWeeklyData[i] == 1 && kSelectNow[i] != 1) {
+                    for (var l = 1; l <= 4; l++) {
+                        var n;
+                        switch (l) {
+                            case 1:
+                                n = 2;
+                                break;
+                            case 2:
+                                n = 3;
+                                break;
+                            case 3:
+                                n = 5;
+                                break;
+                            case 4:
+                                n = 7;
+                                break;
+                        }
+
+                        if (kSelectNow[i] % n != 0) continue;
+
+                        var QuX = document.getElementById("k" + i.toString() + "-" + l.toString()).textContent;
+                        var QuuX = Number(localStorage.getItem(QuX));
+                        QuuX++;
+                        localStorage.setItem(QuX, QuuX.toString());
+                    }
                     kWeeklyData[i] = kSelectNow[i];
                 }
                 localStorage.setItem('kWeekly' + dayNumCol[i], kWeeklyData[i].toString());
+                var FreD = document.getElementsByClassName('k' + dayNumCol[i]);
+                for (var l = 1; l < FreD.length; l++) {
+                    if (FreD.item(l).className == "k" + dayNumCol[dayNum]) {
+                        FreD.item(l).style.backgroundColor = ("#ffff88");
+                    }
+                    else {
+                        FreD.item(l).style.backgroundColor = ("#ffffff");
+                    }
+                }
             }
             kSelectNow = [1, 1, 1, 1, 1, 1];
+            document.getElementById("kKakutei").setAttribute("disabled", true);
+            kTimesSet();
         });
 
 
@@ -308,6 +346,12 @@
                     }
                     break;
                 }
+            }
+        }
+
+        function kTimesSet() {
+            for (var i = 0; i < 6; i++) {
+                document.getElementById("kTimes" + i.toString()).textContent = kStorage[i].toString();
             }
         }
 
