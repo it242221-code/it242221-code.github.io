@@ -86,12 +86,12 @@
 
         <tr>
             <td>残欠席数</td>
-            <td id="kTimes0" align="right">0</td>
-            <td id="kTimes1" align="right">0</td>
-            <td id="kTimes2" align="right">0</td>
-            <td id="kTimes3" align="right">0</td>
-            <td id="kTimes4" align="right">0</td>
-            <td id="kTimes5" align="right">0</td>
+            <td id="kTimes0" align="right">99</td>
+            <td id="kTimes1" align="right">99</td>
+            <td id="kTimes2" align="right">99</td>
+            <td id="kTimes3" align="right">99</td>
+            <td id="kTimes4" align="right">99</td>
+            <td id="kTimes5" align="right">99</td>
         </tr>
 
         <tr id="kTimeDownButtons" hidden>
@@ -242,6 +242,7 @@
                         var QuuX = Number(localStorage.getItem(QuX));
                         QuuX++;
                         localStorage.setItem(QuX, QuuX.toString());
+                        kStorage[i]++;
                     }
                     kWeeklyData[i] = kSelectNow[i];
                 }
@@ -308,7 +309,7 @@
                     break;
                 }
             }
-            for (var l = 1; l <= kSelectDayClass.length; l++) {
+            for (var l = 1; l < kSelectDayClass.length; l++) {
                 kSelect(kSelectDayClass.item(l));
             }
         }
@@ -361,13 +362,23 @@
 
         window.onload = function () {
             for (var i = 0; i < 6; i++) {
-                if (localStorage.getItem(kStorageNameMemo[i])) {
+                if (localStorage.getItem(kStorageNameMemo[i] != null)) {
                     kStorage[i] = Number(localStorage.getItem(kStorageNameMemo[i]));
+                    console.log(localStorage.getItem(kStorageNameMemo[i]));
+                }
+                else{
+                    localStorage.setItem(kStorageNameMemo[i], 0)
+                    console.log("ELSE - 1" + i);
                 }
             }
             for (var i = 1; i <= 5; i++) {
-                if (localStorage.getItem('kWeekly' + dayNumCol[i])) {
+                if (localStorage.getItem('kWeekly' + dayNumCol[i] != null)) {
                     kWeeklyData[i] = Number(localStorage.getItem('kWeekly' + dayNumCol[i]));
+                    console.log(localStorage.getItem('kWeekly' + dayNumCol[i]));
+                }
+                else{
+                    localStorage.setItem("kWeekly" + dayNumCol[i], 1)
+                    console.log("ELSE - 2" + i);
                 }
             }
         }
