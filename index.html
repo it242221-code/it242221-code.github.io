@@ -117,6 +117,10 @@
         </tr>
 
         <tr>
+            <td colspan="7" style="color: #ffffff;" id="kSpace" hidden>空白用</td>
+        </tr>
+
+        <tr>
             <td>残欠席数</td>
             <td id="kTimes0" align="right">99</td>
             <td id="kTimes1" align="right">99</td>
@@ -300,7 +304,7 @@
                 document.getElementById("kTimeUpButtons").setAttribute("hidden", true);
                 document.getElementById("kTimesSonomama").setAttribute("hidden", true);
                 document.getElementById("kTimeDownButtons").setAttribute("hidden", true);
-
+                document.getElementById("kSpace").setAttribute("hidden", true);
                 for (var i = 0; i < 6; i++) {
                     document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffffff";
                     document.getElementById("kTimesSonomama" + i.toString()).style.backgroundColor = "#ffffff";
@@ -314,6 +318,7 @@
                 document.getElementById("kTimeUpButtons").removeAttribute("hidden");
                 document.getElementById("kTimesSonomama").removeAttribute("hidden");
                 document.getElementById("kTimeDownButtons").removeAttribute("hidden");
+                document.getElementById("kSpace").removeAttribute("hidden");
                 for (var i = 0; i < 6; i++) {
                     document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffdddd";
                     document.getElementById("kTimesSonomama" + i.toString()).style.backgroundColor = "#ddddff";
