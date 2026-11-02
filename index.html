@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 
-<body style="font-size: 14px;">
+<body style="font-size: 13px;">
     <table border="2" id="mainTable">
         <tr id="mainWeekDay">
             <th>　</th>
@@ -59,7 +59,7 @@
     <div id="idouTue" hidden>　　　　　＿＿＿　ー＞　Ｔ３３</div>
     <div id="idouWed" hidden>　　　　　Ｔ４３　ー＞　Ｔ３３</div>
     <div id="idouThu" hidden>　　　　　Ｔ３３　ー＞　Ｔ４６</div>
-    <div id="idouFri" hidden>　　　　　Ｔ３３　ー＞　５Ｆ</div>
+    <div id="idouFri" hidden>　　　　　Ｔ３１　ー＞　５Ｆ</div>
 
     <br>
 
@@ -75,13 +75,45 @@
         </tr>
 
         <tr id="kTimeUpButtons" hidden>
-            <td></td>
-            <td align="center"> <button id="kTimeUpButton0">▲</button> </td>
-            <td align="center"> <button id="kTimeUpButton1">▲</button> </td>
-            <td align="center"> <button id="kTimeUpButton2">▲</button> </td>
-            <td align="center"> <button id="kTimeUpButton3">▲</button> </td>
-            <td align="center"> <button id="kTimeUpButton4">▲</button> </td>
-            <td align="center"> <button id="kTimeUpButton5">▲</button> </td>
+            <td>欠席数＋</td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton0" style="background-color: #88cc88;"
+                    class="プロマネ">▲</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton1" style="background-color: #88cc88;"
+                    class="会　　計">▲</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton2" style="background-color: #88cc88;"
+                    class="クラウド">▲</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton3" style="background-color: #88cc88;"
+                    class="ラズパイ">▲</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton4" style="background-color: #88cc88;"
+                    class="卒業研究">▲</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeUpButton5" style="background-color: #88cc88;"
+                    class="就職研究">▲</button> </td>
+        </tr>
+
+        <tr id="kTimesSonomama" hidden>
+            <td>欠席数</td>
+            <td id="kTimesSonomama0" align="right">99</td>
+            <td id="kTimesSonomama1" align="right">99</td>
+            <td id="kTimesSonomama2" align="right">99</td>
+            <td id="kTimesSonomama3" align="right">99</td>
+            <td id="kTimesSonomama4" align="right">99</td>
+            <td id="kTimesSonomama5" align="right">99</td>
+        </tr>
+
+        <tr id="kTimeDownButtons" hidden>
+            <td>欠席数－</td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton0" style="background-color: #88cc88;"
+                    class="プロマネ">▼</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton1" style="background-color: #88cc88;"
+                    class="会　　計">▼</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton2" style="background-color: #88cc88;"
+                    class="クラウド">▼</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton3" style="background-color: #88cc88;"
+                    class="ラズパイ">▼</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton4" style="background-color: #88cc88;"
+                    class="卒業研究">▼</button> </td>
+            <td align="center" bgcolor="#88ff88"> <button id="kTimeDownButton5" style="background-color: #88cc88;"
+                    class="就職研究">▼</button> </td>
         </tr>
 
         <tr>
@@ -94,15 +126,6 @@
             <td id="kTimes5" align="right">99</td>
         </tr>
 
-        <tr id="kTimeDownButtons" hidden>
-            <td></td>
-            <td align="center"> <button id="kTimeDownButton0">▼</button> </td>
-            <td align="center"> <button id="kTimeDownButton1">▼</button> </td>
-            <td align="center"> <button id="kTimeDownButton2">▼</button> </td>
-            <td align="center"> <button id="kTimeDownButton3">▼</button> </td>
-            <td align="center"> <button id="kTimeDownButton4">▼</button> </td>
-            <td align="center"> <button id="kTimeDownButton5">▼</button> </td>
-        </tr>
     </table>
 
     <br>
@@ -159,9 +182,16 @@
         欠席確定
     </button>
 
-    <button id="kHenkou">
-        内容変更
+    <button id="kWeekReset">
+        週クリア
     </button>
+
+
+
+    <button id="kWeekResetKakutei" hidden>
+        text
+    </button>
+
 
     <script>
         let dayNumCol = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -174,6 +204,8 @@
         var kStorage = [0, 0, 0, 0, 0, 0];
         var kStorageNameMemo = ["プロマネ", "会　　計", "クラウド", "ラズパイ", "卒業研究", "就職研究"];
         var kTimesMax = [6, 6, 6, 6, 18, 3];
+        var kTimesEditingNow = false;
+        var kwrFlag = false;
         if (time.getHours() >= 19 && dayNum - 1 < time.getDay()) {
             if (dayNum == 6) kWeeklyDataReset();
             dayNum++;
@@ -187,20 +219,14 @@
         document.getElementById("idou" + dayNumCol[dayNum]).removeAttribute("hidden");
 
         if (kTodayNum) {
-            for (var i = 0; i < kTodayNum.length; i++) {
-                kTodayNum.item(i).style.backgroundColor = ("#ffff88");
+            for (var l = 0; l < kTodayNum.length; l++) {
+                kTodayNum.item(l).style.backgroundColor = ("#ffff88");
             }
         }
-
-        kTimesSet();
-
-
-
 
 
 
         //-----欠席入力-----//
-
 
         for (var i = 1; i <= 5; i++) {
             var kDayNum = document.getElementsByClassName('k' + dayNumCol[i]);
@@ -239,10 +265,13 @@
                         if (kSelectNow[i] % n != 0) continue;
 
                         var QuX = document.getElementById("k" + i.toString() + "-" + l.toString()).textContent;
+                        console.log(QuX);
                         var QuuX = Number(localStorage.getItem(QuX));
+                        console.log(QuuX);
                         QuuX++;
+                        console.log("2 - " + QuuX);
                         localStorage.setItem(QuX, QuuX.toString());
-                        kStorage[i]++;
+                        console.log(localStorage.getItem(QuX));
                     }
                     kWeeklyData[i] = kSelectNow[i];
                 }
@@ -259,35 +288,99 @@
             }
             kSelectNow = [1, 1, 1, 1, 1, 1];
             document.getElementById("kKakutei").setAttribute("disabled", true);
+            LS2Page();
             kTimesSet();
+            kLockWeekly();
         });
 
+        document.getElementById("kTimesEdit").addEventListener('click', (e) => {
+            if (kTimesEditingNow) {
+                kTimesEditingNow = false;
+                e.target.textContent = "編集";
+                document.getElementById("kTimeUpButtons").setAttribute("hidden", true);
+                document.getElementById("kTimesSonomama").setAttribute("hidden", true);
+                document.getElementById("kTimeDownButtons").setAttribute("hidden", true);
 
+                for (var i = 0; i < 6; i++) {
+                    document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffffff";
+                    document.getElementById("kTimesSonomama" + i.toString()).style.backgroundColor = "#ffffff";
+                }
 
+                kTimesSet();
+            }
+            else {
+                kTimesEditingNow = true;
+                e.target.textContent = "戻る";
+                document.getElementById("kTimeUpButtons").removeAttribute("hidden");
+                document.getElementById("kTimesSonomama").removeAttribute("hidden");
+                document.getElementById("kTimeDownButtons").removeAttribute("hidden");
+                for (var i = 0; i < 6; i++) {
+                    document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffdddd";
+                    document.getElementById("kTimesSonomama" + i.toString()).style.backgroundColor = "#ddddff";
+                }
+            }
+        });
 
+        for (var i = 0; i < 6; i++) {
+            document.getElementById("kTimeUpButton" + i.toString()).addEventListener('click', (e) => {
+                var a = Number(localStorage.getItem(e.target.className)) + 1;
+                localStorage.setItem(e.target.className, a.toString())
+                LS2Page();
+                kTimesSet();
+            });
+            document.getElementById("kTimeDownButton" + i.toString()).addEventListener('click', (e) => {
+                var a = Number(localStorage.getItem(e.target.className));
+                if (a > 0) {
+                    a--;
+                    localStorage.setItem(e.target.className, a.toString())
+                    LS2Page();
+                    kTimesSet();
+                }
+            });
+        }
 
+        document.getElementById("kWeekReset").addEventListener('click', (e) => {
+            if (kwrFlag) {
+                kwrFlag = false;
+                e.target.removeAttribute("style");
+                document.getElementById("kWeekResetKakutei").setAttribute("hidden", true);
+            }
+            else {
+                kwrFlag = true;
+                e.target.style.backgroundColor = "#dd6677";
+                document.getElementById("kWeekResetKakutei").removeAttribute("hidden");
+            }
+        });
 
-
+        document.getElementById("kWeekResetKakutei").addEventListener('click', (e) => {
+            kwrFlag = false;
+            document.getElementById("kWeekReset").removeAttribute("style");
+            e.target.setAttribute("hidden", true);
+            kWeeklyDataReset();
+            kLockWeekly();
+        });
 
         //-----FUNC-----//
 
 
         function kSelect(kTarget) {
             var ksnfAns = kSelectNowFunc(kTarget.id);
-            if (ksnfAns % 1000 == 1) {
-                if (kTarget.className == "k" + dayNumCol[dayNum]) {
-                    kTarget.style.backgroundColor = ("#ffff88");
+            if (ksnfAns != 9999) {
+                if (ksnfAns % 1000 == 1) {
+                    if (kTarget.className == "k" + dayNumCol[dayNum]) {
+                        kTarget.style.backgroundColor = ("#ffff88");
+                    }
+                    else {
+                        kTarget.style.backgroundColor = ("#ffffff");
+                    }
                 }
                 else {
-                    kTarget.style.backgroundColor = ("#ffffff");
-                }
-            }
-            else {
-                if (kTarget.className == "k" + dayNumCol[dayNum]) {
-                    kTarget.style.backgroundColor = ("#ff9999");
-                }
-                else {
-                    kTarget.style.backgroundColor = ("#bbbbbb");
+                    if (kTarget.className == "k" + dayNumCol[dayNum]) {
+                        kTarget.style.backgroundColor = ("#ff9999");
+                    }
+                    else {
+                        kTarget.style.backgroundColor = ("#bbbbbb");
+                    }
                 }
             }
 
@@ -333,6 +426,11 @@
                                 n = 7;
                                 break;
                         }
+                        if (n != 1) {
+                            if (kWeeklyData[i] % n == 0) {
+                                return 9999;
+                            }
+                        }
                         break;
                     }
                 }
@@ -352,35 +450,111 @@
 
         function kTimesSet() {
             for (var i = 0; i < 6; i++) {
-                document.getElementById("kTimes" + i.toString()).textContent = kStorage[i].toString();
+                document.getElementById("kTimes" + i.toString()).textContent = (kTimesMax[i] - kStorage[i]).toString();
+                document.getElementById("kTimesSonomama" + i.toString()).textContent = kStorage[i].toString();
+                if (!kTimesEditingNow) {
+                    if (i < 5) {
+                        if (kTimesMax[i] - kStorage[i] < 0) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#333333"
+                        }
+                        else if (kTimesMax[i] - kStorage[i] == 0) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ff0000"
+                        }
+                        else if (kTimesMax[i] - kStorage[i] == 1) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ff8800"
+                        }
+                        else if (kTimesMax[i] - kStorage[i] == 2) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffff00"
+                        }
+                        else {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffffff"
+                        }
+                    }
+                    else {
+                        if (kTimesMax[i] - kStorage[i] < 0) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#333333"
+                        }
+                        else if (kTimesMax[i] - kStorage[i] == 0) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ff0000"
+                        }
+                        else if (kTimesMax[i] - kStorage[i] == 1) {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffff00"
+                        }
+                        else {
+                            document.getElementById("kTimes" + i.toString()).style.backgroundColor = "#ffffff"
+                        }
+                    }
+                }
+
+            }
+        }
+
+        function kLockWeekly() {
+            for (var i = 1; i <= 5; i++) {
+                var l = 0;
+                if (kWeeklyData[i] % 2 == 0) {
+                    document.getElementById("k" + i.toString() + "-1").style.textDecoration = "line-through";
+                    document.getElementById("k" + i.toString() + "-1").style.backgroundColor = "#dd6677";
+                }
+                if (kWeeklyData[i] % 3 == 0) {
+                    document.getElementById("k" + i.toString() + "-2").style = "text-decoration: line-through;";
+                    document.getElementById("k" + i.toString() + "-2").style.backgroundColor = "#dd6677";
+                }
+                if (kWeeklyData[i] % 5 == 0) {
+                    document.getElementById("k" + i.toString() + "-3").style = "text-decoration: line-through;";
+                    document.getElementById("k" + i.toString() + "-3").style.backgroundColor = "#dd6677";
+                }
+                if (kWeeklyData[i] % 7 == 0) {
+                    document.getElementById("k" + i.toString() + "-4").style = "text-decoration: line-through;";
+                    document.getElementById("k" + i.toString() + "-4").style.backgroundColor = "#dd6677";
+                }
             }
         }
 
         function kWeeklyDataReset() {
             kWeeklyData = [1, 1, 1, 1, 1, 1];
+            for (var i = 1; i <= 5; i++) {
+                localStorage.setItem("kWeekly" + dayNumCol[i], "1");
+                var a = document.getElementsByClassName('k' + dayNumCol[i]);
+                for (var l = 1; l < a.length; l++) {
+                    a.item(l).style = "";
+                    if (dayNum == i) {
+                        a.item(l).style.backgroundColor = ("#ffff88");
+                    }
+                }
+            }
         }
 
-        window.onload = function () {
+
+        function LS2Page() {
             for (var i = 0; i < 6; i++) {
-                if (localStorage.getItem(kStorageNameMemo[i] != null)) {
+                if (localStorage.getItem(kStorageNameMemo[i]) != null) {
                     kStorage[i] = Number(localStorage.getItem(kStorageNameMemo[i]));
-                    console.log(localStorage.getItem(kStorageNameMemo[i]));
+                    console.log("true - 1" + localStorage.getItem(kStorageNameMemo[i]));
                 }
-                else{
-                    localStorage.setItem(kStorageNameMemo[i], 0)
+                else {
+                    localStorage.setItem(kStorageNameMemo[i], '0')
                     console.log("ELSE - 1" + i);
                 }
             }
             for (var i = 1; i <= 5; i++) {
-                if (localStorage.getItem('kWeekly' + dayNumCol[i] != null)) {
+                if (localStorage.getItem('kWeekly' + dayNumCol[i]) != null) {
                     kWeeklyData[i] = Number(localStorage.getItem('kWeekly' + dayNumCol[i]));
-                    console.log(localStorage.getItem('kWeekly' + dayNumCol[i]));
+                    console.log("true - 2" + localStorage.getItem('kWeekly' + dayNumCol[i]));
                 }
-                else{
-                    localStorage.setItem("kWeekly" + dayNumCol[i], 1)
+                else {
+                    localStorage.setItem("kWeekly" + dayNumCol[i], '1');
                     console.log("ELSE - 2" + i);
                 }
             }
+        }
+
+
+        window.onload = function () {
+            LS2Page();
+            kTimesSet();
+            kLockWeekly();
+
         }
 
     </script>
